@@ -6,81 +6,145 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
+package com.example.entities;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 @Entity
-public class Advisor {
-
+public class Author {
     @Id
-    @GeneratedValue()
-    private long advisorId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    private int age;
 
-    @Column(nullable = false)
-    private String firstName;
-
-    @Column(nullable = false)
-    private String lastName;
-
-    @Column(nullable = false)
-    private String address;
-
-    @Column(nullable = false)
-    private String phone;
-
-    @Column(nullable = false)
-    private String email;
-
-    protected Advisor() {
-
+    // Constructors
+    public Author() {
     }
 
-    public Advisor(String firstName, String lastName, String address, String phone, String email) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.phone = phone;
-        this.email = email;
+    public Author(String name, int age) {
+        this.name = name;
+        this.age = age;
     }
 
-    public Long getAdvisorId() {
-        return advisorId;
+    // Getters and Setters
+    public Long getId() {
+        return id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public int getAge() {
+        return age;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setAge(int age) {
+        this.age = age;
+    }
+}
+
+package com.example.entities;
+
+        import javax.persistence.Entity;
+        import javax.persistence.GeneratedValue;
+        import javax.persistence.GenerationType;
+        import javax.persistence.Id;
+        import javax.persistence.ManyToOne;
+
+@Entity
+public class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String title;
+
+    @ManyToOne
+    private Author author;
+
+    // Constructors
+    public Book() {
     }
 
-    public String getAddress() {
-        return address;
+    public Book(String title, Author author) {
+        this.title = title;
+        this.author = author;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    // Getters and Setters
+    public Long getId() {
+        return id;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getTitle() {
+        return title;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getEmail() {
-        return email;
+    public Author getAuthor() {
+        return author;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
+}
+package com.example.entities;
+
+        import javax.persistence.Entity;
+        import javax.persistence.GeneratedValue;
+        import javax.persistence.GenerationType;
+        import javax.persistence.Id;
+        import javax.persistence.OneToMany;
+        import java.util.List;
+
+@Entity
+public class Publisher {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+
+    @OneToMany(mappedBy = "publisher")
+    private List<Book> books;
+
+    // Constructors
+    public Publisher() {
+    }
+
+    public Publisher(String name) {
+        this.name = name;
+    }
+
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 }
